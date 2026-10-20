@@ -23,6 +23,9 @@
     /* Фото-фон Hero и осветляющая вуаль поверх него для читаемости текста */
     .hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(250, 250, 249, 0.93) 0%, rgba(250, 250, 249, 0.85) 55%, rgba(250, 250, 249, 0.75) 100%); }
+    /* Микро-админка: размеры модалки кастомные (max-h-* и адаптивная ширина ограничены в Tailwind v2) */
+    .admin-panel { width: 100%; max-height: 90vh; overflow-y: auto; border-radius: 1rem 1rem 0 0; }
+    @media (min-width: 640px) { .admin-panel { width: 28rem; border-radius: 1rem; } }
     .font-display { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; }
     .modal-overlay { background: rgba(41, 32, 29, 0.62); }
     .modal-panel {
@@ -57,7 +60,7 @@
   <header class="sticky top-0 z-40 surface-frosted border-b border-gray-200">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="flex items-center justify-between h-14 sm:h-16">
-        <a href="#top" class="font-display text-lg sm:text-xl font-semibold text-gray-900">
+        <a href="#top" id="brand-logo" class="font-display text-lg sm:text-xl font-semibold text-gray-900">
           Аура <span class="text-pink-500 italic">lait</span>
         </a>
         <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-gray-600">
@@ -104,7 +107,7 @@
             Записаться онлайн
           </button>
           <a href="tel:+79212480600"
-            class="w-full sm:w-auto px-8 py-3 rounded-full bg-white hover:bg-gray-100 text-gray-800 font-semibold border border-gray-300 shadow-sm transition-colors duration-200">
+            class="js-phone w-full sm:w-auto px-8 py-3 rounded-full bg-white hover:bg-gray-100 text-gray-800 font-semibold border border-gray-300 shadow-sm transition-colors duration-200">
             +7 (921) 248-06-00
           </a>
         </div>
@@ -151,7 +154,7 @@
       <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
         <h2 class="font-display text-2xl sm:text-4xl font-semibold text-gray-900 text-center">Цены</h2>
         <p class="mt-2 text-center text-gray-500 text-sm sm:text-base">Частичный прайс из открытых источников · полный — в онлайн-записи</p>
-        <ul class="mt-8 sm:mt-12 max-w-3xl mx-auto divide-y divide-gray-100">
+        <ul id="price-list" class="mt-8 sm:mt-12 max-w-3xl mx-auto divide-y divide-gray-100">
           <li class="py-4 flex items-baseline justify-between gap-4">
             <div>
               <p class="font-medium text-gray-800">Маникюр аппаратный (комбинированный) · гель-лак · френч</p>
@@ -222,7 +225,7 @@
     <section id="masters" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
       <h2 class="font-display text-2xl sm:text-4xl font-semibold text-gray-900 text-center">Мастера</h2>
       <p class="mt-2 text-center text-gray-500 text-sm sm:text-base">Команда салона «Аура lait»</p>
-      <div class="mt-8 sm:mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
+      <div id="masters-grid" class="mt-8 sm:mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
         <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 text-center">
           <img src="https://f2.dikidi.ru/c27/v26555/55302h07jo.jpg" alt="Бурдаева Юлия" class="w-16 h-16 rounded-full object-cover shadow-sm" loading="lazy">
           <p class="mt-3 font-medium text-gray-900 text-sm sm:text-base">Бурдаева Юлия</p>
@@ -285,7 +288,7 @@
             <h3 class="font-semibold text-gray-900">Как нас найти</h3>
             <p class="mt-2 text-gray-600 text-sm sm:text-base">г. Архангельск, ул. Никитова, 9/1, 2 этаж,<br>ТЦ «На Никитова» (мкр. Варавино)</p>
             <p class="mt-3 text-gray-600 text-sm sm:text-base">Часы работы: ежедневно 10:00–20:00</p>
-            <a href="tel:+79212480600" class="mt-3 inline-block font-semibold text-pink-500 hover:text-pink-600">+7 (921) 248-06-00</a>
+            <a href="tel:+79212480600" class="js-phone mt-3 inline-block font-semibold text-pink-500 hover:text-pink-600">+7 (921) 248-06-00</a>
           </div>
           <div class="bg-gray-50 rounded-2xl border border-gray-200 p-6">
             <h3 class="font-semibold text-gray-900">Мы в сети</h3>
@@ -417,6 +420,409 @@
       });
 
       document.getElementById('year').textContent = String(new Date().getFullYear());
+    })();
+  </script>
+
+  <!-- ================= Микро-админка «Аура lait» (демо) =================
+       Вход: дописать #admin к адресу. Пароль проверяется на клиенте —
+       это концепт без серверной части, не используйте для реальных данных. -->
+  <button id="admin-launch" type="button"
+    class="hidden opacity-0 pointer-events-none fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-40 px-4 py-2 rounded-full bg-pink-500 hover:bg-pink-600 text-white text-xs sm:text-sm font-semibold shadow-lg transition-opacity duration-200">
+    Панель управления
+  </button>
+
+  <div id="admin-modal" class="hidden fixed inset-0" style="z-index:70" role="dialog" aria-modal="true" aria-labelledby="admin-title">
+    <div class="modal-overlay absolute inset-0" data-admin-close></div>
+    <div class="absolute inset-0 flex items-end sm:items-center justify-center">
+      <div class="admin-panel relative bg-white shadow-2xl">
+        <div class="flex items-center justify-between gap-4 px-5 py-3 border-b border-gray-200">
+          <p id="admin-title" class="font-semibold text-gray-900 text-sm sm:text-base">Панель управления</p>
+          <button type="button" data-admin-close aria-label="Закрыть панель управления"
+            class="w-9 h-9 -mr-2 rounded-full hover:bg-gray-100 text-gray-500 text-2xl leading-none flex items-center justify-center">&times;</button>
+        </div>
+
+        <div id="admin-login" class="p-5 space-y-4">
+          <p class="text-sm text-gray-500">Введите пароль администратора, чтобы изменить данные сайта.</p>
+          <label class="block">
+            <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">Пароль</span>
+            <input id="admin-pass" type="password" autocomplete="off"
+              class="mt-1 w-full px-3 py-2 rounded-xl border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-sm">
+          </label>
+          <p id="admin-error" class="hidden text-sm text-red-600">Неверный пароль. Попробуйте ещё раз.</p>
+          <button id="admin-login-btn" type="button"
+            class="w-full py-2.5 rounded-full bg-pink-500 hover:bg-pink-600 text-white text-sm font-semibold shadow-sm transition-colors duration-200">Войти</button>
+        </div>
+
+        <div id="admin-panel" class="hidden p-5 space-y-5">
+          <label class="block">
+            <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">Телефон салона</span>
+            <input id="admin-phone" type="text"
+              class="mt-1 w-full px-3 py-2 rounded-xl border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-sm">
+          </label>
+          <label class="block">
+            <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">Название салона (шапка)</span>
+            <input id="admin-name" type="text"
+              class="mt-1 w-full px-3 py-2 rounded-xl border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-sm">
+          </label>
+          <label class="block">
+            <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">Логотип — URL картинки (пусто = текст)</span>
+            <input id="admin-logo" type="text" placeholder="https://…/logo.jpg"
+              class="mt-1 w-full px-3 py-2 rounded-xl border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-sm">
+          </label>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">Цены на услуги</p>
+            <div id="admin-prices" class="mt-2 space-y-3"></div>
+          </div>
+          <div>
+            <div class="flex items-center justify-between">
+              <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">Мастера</p>
+              <button id="admin-master-add" type="button"
+                class="text-xs font-semibold text-pink-500 hover:text-pink-600 transition-colors duration-200">+ Добавить мастера</button>
+            </div>
+            <div id="admin-masters" class="mt-2 space-y-3"></div>
+          </div>
+          <p id="admin-msg" class="hidden text-sm text-red-600"></p>
+          <button id="admin-save" type="button"
+            class="w-full py-2.5 rounded-full bg-pink-500 hover:bg-pink-600 text-white text-sm font-semibold shadow-sm transition-colors duration-200">Сохранить изменения</button>
+          <div class="grid grid-cols-2 gap-2 pt-3 border-t border-gray-100">
+            <button id="admin-download" type="button"
+              class="py-2 px-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium transition-colors duration-200">Скачать резервную копию</button>
+            <button id="admin-upload" type="button"
+              class="py-2 px-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium transition-colors duration-200">Загрузить резервную копию</button>
+            <input id="admin-file" type="file" accept=".json,application/json" class="hidden">
+          </div>
+          <p class="text-xs text-gray-400">Демо-режим: изменения хранятся локально в этом браузере (localStorage) и видны только вам.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var STORAGE_KEY = 'aura_lait_data';
+      var ADMIN_PASSWORD = 'admin2026';
+
+      var launch = document.getElementById('admin-launch');
+      var modal = document.getElementById('admin-modal');
+      var loginView = document.getElementById('admin-login');
+      var panelView = document.getElementById('admin-panel');
+      var passInput = document.getElementById('admin-pass');
+      var errorEl = document.getElementById('admin-error');
+      var phoneInput = document.getElementById('admin-phone');
+      var nameInput = document.getElementById('admin-name');
+      var logoInput = document.getElementById('admin-logo');
+      var pricesBox = document.getElementById('admin-prices');
+      var mastersBox = document.getElementById('admin-masters');
+      var msgEl = document.getElementById('admin-msg');
+      var fileInput = document.getElementById('admin-file');
+
+      function esc(s) {
+        return String(s).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      }
+
+      // Дефолтные данные читаем из статичной разметки — единый источник с вёрсткой
+      // (разметка зеркалирует data/business.json, сверено QA)
+      function readDefaultsFromDom() {
+        var phoneEl = document.querySelector('a.js-phone');
+        var items = [];
+        document.querySelectorAll('#price-list > li').forEach(function (li) {
+          var ps = li.querySelectorAll('p');
+          items.push({
+            service: ps[0] ? ps[0].textContent.trim() : '',
+            duration: ps[1] ? ps[1].textContent.trim() : '',
+            price: ps.length ? ps[ps.length - 1].textContent.trim() : ''
+          });
+        });
+        var masters = [];
+        document.querySelectorAll('#masters-grid > div').forEach(function (card) {
+          var img = card.querySelector('img');
+          var ps = card.querySelectorAll('p');
+          masters.push({
+            name: ps[0] ? ps[0].textContent.trim() : '',
+            role: ps[1] ? ps[1].textContent.trim() : '',
+            photo: img ? img.getAttribute('src') : ''
+          });
+        });
+        var brandEl = document.getElementById('brand-logo');
+        return {
+          phone: phoneEl ? phoneEl.textContent.trim() : '',
+          name: brandEl ? brandEl.textContent.trim() : '',
+          logoUrl: '',
+          prices: items,
+          masters: masters
+        };
+      }
+
+      var defaults = readDefaultsFromDom();
+
+      // Обязательные поля — phone и prices; name/logoUrl/masters опциональны
+      // (совместимость со старыми записями v3 и файлами бэкапа прежнего формата)
+      function isValidData(obj) {
+        return !!(obj && typeof obj.phone === 'string' && Array.isArray(obj.prices));
+      }
+
+      function loadStored() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return null;
+          var obj = JSON.parse(raw);
+          if (!isValidData(obj)) return null;
+          return obj;
+        } catch (e) { return null; }
+      }
+
+      function renderPhone(phone) {
+        var digits = String(phone).replace(/\D/g, '');
+        document.querySelectorAll('a.js-phone').forEach(function (a) {
+          a.textContent = phone;
+          if (digits) a.setAttribute('href', 'tel:+' + digits);
+        });
+      }
+
+      function renderPrices(items) {
+        document.getElementById('price-list').innerHTML = items.map(function (it) {
+          var sub = it.duration ? '<p class="text-sm text-gray-400">' + esc(it.duration) + '</p>' : '';
+          return '<li class="py-4 flex items-baseline justify-between gap-4">' +
+            '<div><p class="font-medium text-gray-800">' + esc(it.service) + '</p>' + sub + '</div>' +
+            '<p class="whitespace-nowrap font-semibold text-gray-900">' + esc(it.price) + '</p></li>';
+        }).join('');
+      }
+
+      function initials(name) {
+        var parts = String(name).trim().split(/\s+/).filter(Boolean);
+        return ((parts[0] || '').charAt(0) + (parts[1] || '').charAt(0)).toUpperCase();
+      }
+
+      function renderBrand(name, logoUrl) {
+        var link = document.getElementById('brand-logo');
+        if (!link) return;
+        if (logoUrl) {
+          link.innerHTML = '<img src="' + esc(logoUrl) + '" alt="' + esc(name || 'Логотип салона') + '" class="h-8 sm:h-9 w-auto">';
+          return;
+        }
+        var n = String(name || '').trim() || 'Аура lait';
+        var words = n.split(/\s+/);
+        if (words.length > 1) {
+          var last = words.pop();
+          link.innerHTML = esc(words.join(' ')) + ' <span class="text-pink-500 italic">' + esc(last) + '</span>';
+        } else {
+          link.innerHTML = esc(n);
+        }
+      }
+
+      function renderMasters(items) {
+        var grid = document.getElementById('masters-grid');
+        if (!grid) return;
+        grid.innerHTML = items.map(function (m) {
+          var name = String(m.name || '').trim();
+          var role = String(m.role || '').trim();
+          var photo = String(m.photo || '').trim();
+          var avatar = photo
+            ? '<img src="' + esc(photo) + '" alt="' + esc(name) + '" class="w-16 h-16 rounded-full object-cover shadow-sm" loading="lazy">'
+            : '<div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-pink-300 to-pink-500 flex items-center justify-center text-white font-semibold" aria-hidden="true">' + esc(initials(name)) + '</div>';
+          return '<div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 text-center">' +
+            avatar +
+            '<p class="mt-3 font-medium text-gray-900 text-sm sm:text-base">' + (name ? esc(name) : '&nbsp;') + '</p>' +
+            '<p class="text-xs sm:text-sm text-gray-500 mt-1">' + (role ? esc(role) : '&nbsp;') + '</p>' +
+            '</div>';
+        }).join('');
+      }
+
+      // Приоритет данных: localStorage поверх дефолтной разметки;
+      // блок мастеров и шапка рендерятся циклом всегда (из stored или из дефолтов)
+      var stored = loadStored();
+      var effective = stored || defaults;
+      renderPhone(effective.phone || '');
+      renderPrices(effective.prices || []);
+      renderBrand(effective.name, effective.logoUrl);
+      renderMasters(Array.isArray(effective.masters) ? effective.masters : defaults.masters);
+
+      function buildPriceInputs(items) {
+        pricesBox.innerHTML = '';
+        items.forEach(function (it) {
+          var row = document.createElement('label');
+          row.className = 'block';
+          row.innerHTML = '<span class="block text-xs text-gray-500">' + esc(it.service) + '</span>' +
+            '<input type="text" class="admin-price mt-1 w-full px-3 py-2 rounded-xl border border-gray-300 focus:border-pink-500 text-sm" value="' + esc(it.price) + '">';
+          var inp = row.querySelector('.admin-price');
+          inp.dataset.service = it.service;
+          inp.dataset.duration = it.duration || '';
+          pricesBox.appendChild(row);
+        });
+      }
+
+      function makeMasterRow(m) {
+        var row = document.createElement('div');
+        row.className = 'admin-master rounded-xl border border-gray-200 bg-gray-50 p-3 space-y-2';
+        row.innerHTML =
+          '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">' +
+            '<input type="text" placeholder="Имя" class="admin-m-name w-full px-2.5 py-1.5 rounded-lg border border-gray-300 focus:border-pink-500 text-sm" value="' + esc(m.name || '') + '">' +
+            '<input type="text" placeholder="Должность" class="admin-m-role w-full px-2.5 py-1.5 rounded-lg border border-gray-300 focus:border-pink-500 text-sm" value="' + esc(m.role || '') + '">' +
+          '</div>' +
+          '<div class="flex items-center gap-2">' +
+            '<input type="text" placeholder="Ссылка на фото (URL)" class="admin-m-photo flex-1 min-w-0 w-full px-2.5 py-1.5 rounded-lg border border-gray-300 focus:border-pink-500 text-sm" value="' + esc(m.photo || '') + '">' +
+            '<button type="button" class="admin-m-del flex-shrink-0 px-3 py-1.5 rounded-lg bg-red-100 hover:bg-red-200 text-red-600 text-xs font-semibold transition-colors duration-200">Удалить</button>' +
+          '</div>';
+        return row;
+      }
+
+      function buildMastersInputs(items) {
+        mastersBox.innerHTML = '';
+        items.forEach(function (m) {
+          mastersBox.appendChild(makeMasterRow(m));
+        });
+      }
+
+      function collectData() {
+        var items = [];
+        pricesBox.querySelectorAll('.admin-price').forEach(function (inp) {
+          items.push({ service: inp.dataset.service, duration: inp.dataset.duration, price: inp.value.trim() });
+        });
+        var masters = [];
+        mastersBox.querySelectorAll('.admin-master').forEach(function (row) {
+          var name = row.querySelector('.admin-m-name').value.trim();
+          var role = row.querySelector('.admin-m-role').value.trim();
+          var photo = row.querySelector('.admin-m-photo').value.trim();
+          if (name || role || photo) {
+            masters.push({ name: name, role: role, photo: photo });
+          }
+        });
+        return {
+          phone: phoneInput.value.trim(),
+          name: nameInput.value.trim(),
+          logoUrl: logoInput.value.trim(),
+          prices: items,
+          masters: masters
+        };
+      }
+
+      function openModal() {
+        var data = loadStored() || defaults;
+        phoneInput.value = data.phone || '';
+        nameInput.value = data.name || '';
+        logoInput.value = data.logoUrl || '';
+        buildPriceInputs(data.prices || []);
+        buildMastersInputs(Array.isArray(data.masters) ? data.masters : defaults.masters);
+        errorEl.classList.add('hidden');
+        msgEl.classList.add('hidden');
+        loginView.classList.remove('hidden');
+        panelView.classList.add('hidden');
+        passInput.value = '';
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        passInput.focus();
+      }
+
+      function closeModal() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+
+      // Скрытый вход: только при #admin в адресной строке (в т.ч. добавленном на открытой странице)
+      function syncLaunch() {
+        if (window.location.hash === '#admin') {
+          launch.classList.remove('hidden');
+          launch.tabIndex = 0;
+          requestAnimationFrame(function () {
+            launch.classList.remove('opacity-0', 'pointer-events-none');
+          });
+        } else {
+          launch.classList.add('opacity-0', 'pointer-events-none');
+          launch.tabIndex = -1;
+        }
+      }
+      window.addEventListener('hashchange', syncLaunch);
+      syncLaunch();
+
+      launch.addEventListener('click', openModal);
+
+      function tryLogin() {
+        if (passInput.value === ADMIN_PASSWORD) {
+          loginView.classList.add('hidden');
+          panelView.classList.remove('hidden');
+          errorEl.classList.add('hidden');
+          passInput.value = '';
+        } else {
+          errorEl.classList.remove('hidden');
+        }
+      }
+      document.getElementById('admin-login-btn').addEventListener('click', tryLogin);
+      passInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') tryLogin();
+      });
+
+      // Динамический список мастеров: добавление и удаление строк
+      document.getElementById('admin-master-add').addEventListener('click', function () {
+        mastersBox.appendChild(makeMasterRow({ name: '', role: '', photo: '' }));
+        var rows = mastersBox.querySelectorAll('.admin-master');
+        var last = rows[rows.length - 1];
+        if (last) last.querySelector('.admin-m-name').focus();
+      });
+      mastersBox.addEventListener('click', function (e) {
+        var btn = e.target.closest ? e.target.closest('.admin-m-del') : null;
+        if (btn) {
+          var row = btn.closest('.admin-master');
+          if (row) row.remove();
+        }
+      });
+
+      // Сохранение: перезагрузка сохраняет #admin — админ остаётся в режиме редактирования
+      document.getElementById('admin-save').addEventListener('click', function () {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(collectData()));
+        } catch (e) {
+          msgEl.textContent = 'Не удалось сохранить: localStorage недоступен в этом браузере (приватный режим?).';
+          msgEl.classList.remove('hidden');
+          return;
+        }
+        location.reload();
+      });
+
+      document.getElementById('admin-download').addEventListener('click', function () {
+        var blob = new Blob([JSON.stringify(collectData(), null, 2)], { type: 'application/json' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'business_backup.json';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(a.href);
+      });
+
+      document.getElementById('admin-upload').addEventListener('click', function () {
+        fileInput.click();
+      });
+      fileInput.addEventListener('change', function () {
+        var f = fileInput.files && fileInput.files[0];
+        if (!f) return;
+        var reader = new FileReader();
+        reader.onload = function () {
+          try {
+            var obj = JSON.parse(String(reader.result));
+            if (!isValidData(obj)) {
+              throw new Error('bad shape');
+            }
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+            location.reload();
+          } catch (e) {
+            msgEl.textContent = 'Ошибка: файл не похож на резервную копию (нужен JSON с полями phone и prices).';
+            msgEl.classList.remove('hidden');
+          }
+        };
+        reader.readAsText(f);
+        fileInput.value = '';
+      });
+
+      modal.querySelectorAll('[data-admin-close]').forEach(function (el) {
+        el.addEventListener('click', closeModal);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+      });
     })();
   </script>
 </body>
