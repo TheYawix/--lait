@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Аура lait — салон красоты в Архангельске (демо-концепт)</title>
+  <meta name="description" content="Демо-концепт сайта салона красоты «Аура lait» (Архангельск): маникюр и педикюр, парикмахерский зал, ресницы, брови, косметология. Онлайн-запись через DIKIDI.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Tailwind CSS: стабильная локальная сборка v2.2.19 (чистая CSS-ссылка, работает offline и на GitHub Pages) -->
+  <link rel="stylesheet" href="css/tailwind.min.css">
+
+  <!-- Шрифты: подключаются с CDN, при отсутствии сети корректно заменяются системными -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; }
+    /* Полупрозрачная поверхность для липкой шапки и нижней панели (модификатор /95 в Tailwind v2 недоступен) */
+    .surface-frosted { background-color: rgba(250, 250, 249, 0.95); }
+    /* Фото-фон Hero и осветляющая вуаль поверх него для читаемости текста */
+    .hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(250, 250, 249, 0.93) 0%, rgba(250, 250, 249, 0.85) 55%, rgba(250, 250, 249, 0.75) 100%); }
+    .font-display { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; }
+    .modal-overlay { background: rgba(41, 32, 29, 0.62); }
+    .modal-panel {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column; overflow: hidden;
+      background: #fff;
+    }
+    @media (min-width: 640px) {
+      .modal-panel {
+        width: 48rem; max-width: 100%;
+        height: min(88vh, 720px);
+        border-radius: 1rem;
+        box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.35);
+      }
+    }
+    .modal-panel iframe { flex: 1 1 auto; width: 100%; height: 100%; border: 0; }
+    .modal-panel[aria-busy="true"]::after {
+      content: 'Загружаем онлайн-запись…';
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: #78716c; background: #fafaf9; font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+  <!-- Плашка демо-концепта (обязательна по GLM.md) -->
+  <div class="bg-gray-900 text-gray-100 text-xs sm:text-sm text-center px-4 py-2">
+    Демо-концепт. Не является официальным сайтом. Удалим по первому требованию.
+  </div>
+
+  <!-- Шапка -->
+  <header class="sticky top-0 z-40 surface-frosted border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-14 sm:h-16">
+        <a href="#top" class="font-display text-lg sm:text-xl font-semibold text-gray-900">
+          Аура <span class="text-pink-500 italic">lait</span>
+        </a>
+        <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-gray-600">
+          <a href="#services" class="hover:text-pink-500">Услуги</a>
+          <a href="#prices" class="hover:text-pink-500">Цены</a>
+          <a href="#masters" class="hover:text-pink-500">Мастера</a>
+          <a href="#contacts" class="hover:text-pink-500">Контакты</a>
+        </nav>
+        <button type="button" data-open-modal
+          class="inline-flex items-center justify-center px-4 py-2 rounded-full bg-pink-500 hover:bg-pink-600 text-white text-sm font-semibold shadow-md transition-colors duration-200">
+          Записаться
+        </button>
+      </div>
+      <!-- Мобильная навигация: горизонтальная прокрутка -->
+      <nav class="md:hidden flex gap-5 overflow-x-auto -mx-4 px-4 pb-2 text-sm font-medium text-gray-600 whitespace-nowrap">
+        <a href="#services" class="hover:text-pink-500">Услуги</a>
+        <a href="#prices" class="hover:text-pink-500">Цены</a>
+        <a href="#masters" class="hover:text-pink-500">Мастера</a>
+        <a href="#contacts" class="hover:text-pink-500">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <section class="relative overflow-hidden">
+      <img src="https://f2.dikidi.ru/c18/v17651/5m6klq9ks0.jpg" alt="" aria-hidden="true" class="hero-photo">
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-24 text-center">
+        <p class="text-pink-500 font-semibold tracking-widest uppercase text-xs sm:text-sm">Салон красоты · Архангельск</p>
+        <h1 class="font-display mt-3 text-4xl sm:text-6xl font-bold text-gray-900">
+          Аура <span class="italic text-pink-500">lait</span>
+        </h1>
+        <p class="mt-4 sm:mt-6 text-lg sm:text-2xl text-gray-600 max-w-2xl mx-auto">
+          Место, где ваше преображение становится реальностью
+        </p>
+        <p class="mt-3 text-sm sm:text-base text-gray-500">
+          ТЦ «На Никитова», 2 этаж · ежедневно 10:00–20:00
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+          <button type="button" data-open-modal
+            class="w-full sm:w-auto px-8 py-3 rounded-full bg-pink-500 hover:bg-pink-600 text-white font-semibold shadow-lg transition-colors duration-200">
+            Записаться онлайн
+          </button>
+          <a href="tel:+79212480600"
+            class="w-full sm:w-auto px-8 py-3 rounded-full bg-white hover:bg-gray-100 text-gray-800 font-semibold border border-gray-300 shadow-sm transition-colors duration-200">
+            +7 (921) 248-06-00
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Услуги -->
+    <section id="services" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+      <h2 class="font-display text-2xl sm:text-4xl font-semibold text-gray-900 text-center">Услуги</h2>
+      <p class="mt-2 text-center text-gray-500 text-sm sm:text-base">Ногти, волосы и бьюти-услуги в одном месте</p>
+      <div class="mt-8 sm:mt-12 grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <article class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col">
+          <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=1200&q=80" alt="Процесс маникюра" class="h-40 w-full object-cover" loading="lazy">
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="font-display text-xl font-semibold text-gray-900">Маникюр и педикюр</h3>
+            <p class="mt-2 text-sm sm:text-base text-gray-600 flex-1">
+              Уход за руками и ногами: аппаратный и комбинированный маникюр, покрытие гель-лаком, френч, педикюр. В салоне работают мастера ногтевого сервиса.
+            </p>
+          </div>
+        </article>
+        <article class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col">
+          <img src="https://f2.dikidi.ru/c28/v27696/1k7ntlpggb.jpg" alt="Работа парикмахерского зала — окрашивание волос" class="h-40 w-full object-cover" loading="lazy">
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="font-display text-xl font-semibold text-gray-900">Парикмахерский зал</h3>
+            <p class="mt-2 text-sm sm:text-base text-gray-600 flex-1">
+              Стрижки, окрашивание, колорирование и мелирование волос, уход и реконструкция волос, кератиновое выпрямление.
+            </p>
+          </div>
+        </article>
+        <article class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col sm:col-span-2 lg:col-span-1">
+          <img src="https://f2.dikidi.ru/c18/v17021/567hu14nt1.jpg" alt="Работа мастера — ресницы и брови" class="h-40 w-full object-cover" loading="lazy">
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="font-display text-xl font-semibold text-gray-900">Ресницы, брови, косметология и массаж</h3>
+            <p class="mt-2 text-sm sm:text-base text-gray-600 flex-1">
+              Наращивание ресниц, оформление бровей и ламинирование, перманентный макияж, косметологические процедуры и массаж.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Цены (частично, из открытых источников) -->
+    <section id="prices" class="bg-white border-t border-b border-gray-200">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+        <h2 class="font-display text-2xl sm:text-4xl font-semibold text-gray-900 text-center">Цены</h2>
+        <p class="mt-2 text-center text-gray-500 text-sm sm:text-base">Частичный прайс из открытых источников · полный — в онлайн-записи</p>
+        <ul class="mt-8 sm:mt-12 max-w-3xl mx-auto divide-y divide-gray-100">
+          <li class="py-4 flex items-baseline justify-between gap-4">
+            <div>
+              <p class="font-medium text-gray-800">Маникюр аппаратный (комбинированный) · гель-лак · френч</p>
+              <p class="text-sm text-gray-400">2 ч</p>
+            </div>
+            <p class="whitespace-nowrap font-semibold text-gray-900">2300 ₽</p>
+          </li>
+          <li class="py-4 flex items-baseline justify-between gap-4">
+            <div>
+              <p class="font-medium text-gray-800">Снятие гель-лака · маникюр аппаратный (комбинированный)</p>
+              <p class="text-sm text-gray-400">от 1 ч 30 мин</p>
+            </div>
+            <p class="whitespace-nowrap font-semibold text-gray-900">от 2200 ₽</p>
+          </li>
+          <li class="py-4 flex items-baseline justify-between gap-4">
+            <div>
+              <p class="font-medium text-gray-800">Стрижка женская (короткие волосы)</p>
+              <p class="text-sm text-gray-400">от 30 мин</p>
+            </div>
+            <p class="whitespace-nowrap font-semibold text-gray-900">800 ₽</p>
+          </li>
+          <li class="py-4 flex items-baseline justify-between gap-4">
+            <div>
+              <p class="font-medium text-gray-800">Стрижка женская (средние волосы)</p>
+              <p class="text-sm text-gray-400">от 30 мин</p>
+            </div>
+            <p class="whitespace-nowrap font-semibold text-gray-900">900 ₽</p>
+          </li>
+          <li class="py-4 flex items-baseline justify-between gap-4">
+            <div>
+              <p class="font-medium text-gray-800">Стрижка женская (длинные волосы)</p>
+              <p class="text-sm text-gray-400">от 30 мин</p>
+            </div>
+            <p class="whitespace-nowrap font-semibold text-gray-900">1000 ₽</p>
+          </li>
+          <li class="py-4 flex items-baseline justify-between gap-4">
+            <div>
+              <p class="font-medium text-gray-800">Окрашивание в 1 тон (без материала)</p>
+              <p class="text-sm text-gray-400"></p>
+            </div>
+            <p class="whitespace-nowrap font-semibold text-gray-900">1200–2000 ₽</p>
+          </li>
+          <li class="py-4 flex items-baseline justify-between gap-4">
+            <div>
+              <p class="font-medium text-gray-800">Мелирование волос (с материалом)</p>
+              <p class="text-sm text-gray-400"></p>
+            </div>
+            <p class="whitespace-nowrap font-semibold text-gray-900">2000–7000 ₽</p>
+          </li>
+          <li class="py-4 flex items-baseline justify-between gap-4">
+            <div>
+              <p class="font-medium text-gray-800">Колорирование волос (с материалом)</p>
+              <p class="text-sm text-gray-400"></p>
+            </div>
+            <p class="whitespace-nowrap font-semibold text-gray-900">3000–6000 ₽</p>
+          </li>
+        </ul>
+        <div class="mt-8 text-center">
+          <button type="button" data-open-modal
+            class="px-8 py-3 rounded-full bg-pink-500 hover:bg-pink-600 text-white font-semibold shadow-md transition-colors duration-200">
+            Смотреть полный прайс и записаться
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Мастера -->
+    <section id="masters" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+      <h2 class="font-display text-2xl sm:text-4xl font-semibold text-gray-900 text-center">Мастера</h2>
+      <p class="mt-2 text-center text-gray-500 text-sm sm:text-base">Команда салона «Аура lait»</p>
+      <div class="mt-8 sm:mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 text-center">
+          <img src="https://f2.dikidi.ru/c27/v26555/55302h07jo.jpg" alt="Бурдаева Юлия" class="w-16 h-16 rounded-full object-cover shadow-sm" loading="lazy">
+          <p class="mt-3 font-medium text-gray-900 text-sm sm:text-base">Бурдаева Юлия</p>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1">Парикмахер</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 text-center">
+          <img src="https://f2.dikidi.ru/c28/v27436/74sp6nak33.jpg" alt="Дровнина Анна" class="w-16 h-16 rounded-full object-cover shadow-sm" loading="lazy">
+          <p class="mt-3 font-medium text-gray-900 text-sm sm:text-base">Дровнина Анна</p>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1">Парикмахер-универсал, мастер перманентного макияжа</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 text-center">
+          <img src="https://f2.dikidi.ru/c27/v26555/4qtd1lfkih.jpg" alt="Дюжева Елизавета" class="w-16 h-16 rounded-full object-cover shadow-sm" loading="lazy">
+          <p class="mt-3 font-medium text-gray-900 text-sm sm:text-base">Дюжева Елизавета</p>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1">Мастер ногтевого сервиса</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 text-center">
+          <img src="https://f2.dikidi.ru/c27/v26555/7rjo02i2i4.jpg" alt="Земцовская Александра" class="w-16 h-16 rounded-full object-cover shadow-sm" loading="lazy">
+          <p class="mt-3 font-medium text-gray-900 text-sm sm:text-base">Земцовская Александра</p>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1">Бровист, ламинирование ресниц</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 text-center">
+          <img src="https://f2.dikidi.ru/c28/v27812/2kus38nj4j.jpg" alt="Золотая Алена" class="w-16 h-16 rounded-full object-cover shadow-sm" loading="lazy">
+          <p class="mt-3 font-medium text-gray-900 text-sm sm:text-base">Золотая Алена</p>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1">Мастер маникюра</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 text-center">
+          <img src="https://f2.dikidi.ru/c27/v26555/3lkdfm234b.jpg" alt="Короткова Ольга" class="w-16 h-16 rounded-full object-cover shadow-sm" loading="lazy">
+          <p class="mt-3 font-medium text-gray-900 text-sm sm:text-base">Короткова Ольга</p>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1">Парикмахер</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 text-center">
+          <img src="https://f2.dikidi.ru/c27/v26555/9nbh72p3ed.jpg" alt="Круглецкая Ольга" class="w-16 h-16 rounded-full object-cover shadow-sm" loading="lazy">
+          <p class="mt-3 font-medium text-gray-900 text-sm sm:text-base">Круглецкая Ольга</p>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1">Парикмахер</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 text-center">
+          <img src="https://f2.dikidi.ru/c28/v27771/1el0uuhtf3.jpg" alt="Купченкова Диана" class="w-16 h-16 rounded-full object-cover shadow-sm" loading="lazy">
+          <p class="mt-3 font-medium text-gray-900 text-sm sm:text-base">Купченкова Диана</p>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1">Мастер по реконструкции волос</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 text-center">
+          <img src="https://f2.dikidi.ru/c27/v26555/3chuvmejq9.jpg" alt="Лебедева Юлия" class="w-16 h-16 rounded-full object-cover shadow-sm" loading="lazy">
+          <p class="mt-3 font-medium text-gray-900 text-sm sm:text-base">Лебедева Юлия</p>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1">Массажист, мастер педикюра</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 text-center">
+          <img src="https://f2.dikidi.ru/c27/v26555/dgt9u3bkm1.jpg" alt="Онищенко Елена" class="w-16 h-16 rounded-full object-cover shadow-sm" loading="lazy">
+          <p class="mt-3 font-medium text-gray-900 text-sm sm:text-base">Онищенко Елена</p>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1">Парикмахер</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Контакты -->
+    <section id="contacts" class="bg-white border-t border-gray-200">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+        <h2 class="font-display text-2xl sm:text-4xl font-semibold text-gray-900 text-center">Контакты</h2>
+        <div class="mt-8 sm:mt-12 grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
+          <div class="bg-gray-50 rounded-2xl border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-900">Как нас найти</h3>
+            <p class="mt-2 text-gray-600 text-sm sm:text-base">г. Архангельск, ул. Никитова, 9/1, 2 этаж,<br>ТЦ «На Никитова» (мкр. Варавино)</p>
+            <p class="mt-3 text-gray-600 text-sm sm:text-base">Часы работы: ежедневно 10:00–20:00</p>
+            <a href="tel:+79212480600" class="mt-3 inline-block font-semibold text-pink-500 hover:text-pink-600">+7 (921) 248-06-00</a>
+          </div>
+          <div class="bg-gray-50 rounded-2xl border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-900">Мы в сети</h3>
+            <div class="mt-3 flex flex-col gap-3">
+              <a href="https://vk.com/aura29" target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center px-4 py-2.5 rounded-xl bg-white border border-gray-300 hover:border-pink-400 text-sm font-medium transition-colors duration-200">
+                <span aria-hidden="true">VK</span><span class="sr-only"> — группа салона</span>
+              </a>
+              <a href="https://wa.me/79212480600" target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center px-4 py-2.5 rounded-xl bg-white border border-gray-300 hover:border-pink-400 text-sm font-medium transition-colors duration-200">
+                WhatsApp
+              </a>
+              <a href="https://t.me/+79212480600" target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center px-4 py-2.5 rounded-xl bg-white border border-gray-300 hover:border-pink-400 text-sm font-medium transition-colors duration-200">
+                Telegram
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="mt-8 text-center">
+          <button type="button" data-open-modal
+            class="px-8 py-3 rounded-full bg-pink-500 hover:bg-pink-600 text-white font-semibold shadow-md transition-colors duration-200">
+            Записаться онлайн
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Подвал -->
+  <footer class="bg-gray-900 text-gray-300">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 text-center text-sm space-y-4">
+      <p class="font-display text-lg text-gray-100">Аура <span class="italic text-pink-400">lait</span></p>
+      <p class="text-xs text-gray-400">
+        Демо-концепт. Не является официальным сайтом. Удалим по первому требованию.
+      </p>
+      <p class="text-xs text-gray-500">
+        Данные из открытых источников:
+        <a class="underline hover:text-gray-300" href="https://dikidi.net/ru/profile/salon_krasoty_aura_lait_1761150" target="_blank" rel="noopener noreferrer">DIKIDI</a> ·
+        <a class="underline hover:text-gray-300" href="https://vk.com/aura29" target="_blank" rel="noopener noreferrer">ВКонтакте</a> ·
+        <a class="underline hover:text-gray-300" href="https://2gis.ru/arkhangelsk/firm/70000001025107533" target="_blank" rel="noopener noreferrer">2ГИС</a>
+      </p>
+      <p class="text-xs text-gray-500">© <span id="year">2026</span> · демо-страница для портфолио</p>
+    </div>
+  </footer>
+
+  <!-- Мобильная плавающая кнопка записи -->
+  <div class="sm:hidden fixed bottom-0 inset-x-0 z-40 p-3 surface-frosted border-t border-gray-200">
+    <button type="button" data-open-modal
+      class="w-full py-3 rounded-full bg-pink-500 hover:bg-pink-600 text-white font-semibold shadow-lg transition-colors duration-200">
+      Записаться онлайн
+    </button>
+  </div>
+  <div class="sm:hidden h-16" aria-hidden="true"></div>
+
+  <!-- Модальное окно онлайн-записи (iframe DIKIDI, ленивая загрузка) -->
+  <div id="booking-modal" class="hidden fixed inset-0 z-50" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title">
+    <div class="modal-overlay absolute inset-0" data-close-modal></div>
+    <div class="absolute inset-0 flex items-end sm:items-center justify-center">
+      <div class="modal-panel relative" aria-busy="true">
+        <div class="flex items-center justify-between gap-4 px-4 sm:px-5 py-3 border-b border-gray-200 bg-white">
+          <p id="booking-modal-title" class="font-semibold text-gray-900 text-sm sm:text-base">Онлайн-запись · DIKIDI</p>
+          <div class="flex items-center gap-3">
+            <a id="booking-new-tab" href="https://dikidi.net/ru/profile/salon_krasoty_aura_lait_1761150" target="_blank" rel="noopener noreferrer"
+              class="text-xs sm:text-sm text-pink-500 hover:text-pink-600 font-medium">Открыть в новой вкладке</a>
+            <button type="button" data-close-modal aria-label="Закрыть окно записи"
+              class="w-9 h-9 -mr-1 rounded-full hover:bg-gray-100 text-gray-500 text-2xl leading-none flex items-center justify-center">&times;</button>
+          </div>
+        </div>
+        <iframe id="booking-frame" title="Онлайн-запись через DIKIDI"
+          data-src="https://dikidi.net/ru/profile/salon_krasoty_aura_lait_1761150"
+          src=""
+          referrerpolicy="no-referrer-when-downgrade"
+          allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var modal = document.getElementById('booking-modal');
+      var panel = modal.querySelector('.modal-panel');
+      var frame = document.getElementById('booking-frame');
+      var lastFocused = null;
+
+      // Скрываем индикатор загрузки, когда iframe догрузил контент
+      frame.addEventListener('load', function () {
+        panel.setAttribute('aria-busy', 'false');
+      });
+
+      // Ленивая загрузка: src присваивается только при первом открытии модалки
+      function openModal() {
+        lastFocused = document.activeElement;
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        if (!frame.getAttribute('src')) {
+          panel.setAttribute('aria-busy', 'true');
+          frame.setAttribute('src', frame.getAttribute('data-src'));
+        }
+        var closeBtn = modal.querySelector('button[data-close-modal]');
+        if (closeBtn) {
+          closeBtn.focus();
+        }
+      }
+
+      function closeModal() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+        if (lastFocused && typeof lastFocused.focus === 'function') {
+          lastFocused.focus();
+        }
+      }
+
+      document.querySelectorAll('[data-open-modal]').forEach(function (btn) {
+        btn.addEventListener('click', openModal);
+      });
+
+      modal.querySelectorAll('[data-close-modal]').forEach(function (el) {
+        el.addEventListener('click', closeModal);
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+          closeModal();
+        }
+      });
+
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+    })();
+  </script>
+</body>
+</html>

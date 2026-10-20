@@ -1,0 +1,77 @@
+{
+  "company": {
+    "name": "Аура lait",
+    "tagline": "Место, где ваше преображение становится реальностью",
+    "city": "Архангельск",
+    "address": "г. Архангельск, ул. Никитова, 9/1, 2 этаж, ТЦ «На Никитова» (мкр. Варавино)",
+    "phone": "+7 (921) 248-06-00",
+    "whatsapp": "https://wa.me/79212480600",
+    "telegram": "https://t.me/+79212480600",
+    "vk": "https://vk.com/aura29",
+    "instagram": null,
+    "working_hours": "ежедневно 10:00–20:00",
+    "booking_url": "https://dikidi.net/ru/profile/salon_krasoty_aura_lait_1761150"
+  },
+  "images": {
+    "hero_interior": "https://f2.dikidi.ru/c18/v17651/5m6klq9ks0.jpg",
+    "logo": "https://f2.dikidi.net/c17/v16103/aengqkc9j7.jpg",
+    "services": {
+      "nails": "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=1200&q=80",
+      "hair": "https://f2.dikidi.ru/c28/v27696/1k7ntlpggb.jpg",
+      "beauty": "https://f2.dikidi.ru/c18/v17021/567hu14nt1.jpg"
+    },
+    "gallery": [
+      "https://f2.dikidi.ru/c18/v17651/5m6klq9ks0.jpg",
+      "https://f2.dikidi.ru/c17/v16081/1s2kvdlgk6.jpg",
+      "https://f2.dikidi.ru/c28/v27696/1k7ntlpggb.jpg",
+      "https://f2.dikidi.ru/c28/v27696/6jft02of16.jpg",
+      "https://f2.dikidi.ru/c28/v27696/6j3edjmti0.jpg",
+      "https://f2.dikidi.ru/c18/v17021/567hu14nt1.jpg",
+      "https://f2.dikidi.ru/c20/v19187/106lmerb4t.jpg"
+    ]
+  },
+  "services": [
+    {
+      "id": "nails",
+      "title": "Маникюр и педикюр",
+      "description": "Уход за руками и ногами: аппаратный и комбинированный маникюр, покрытие гель-лаком, френч, педикюр. В салоне работают мастера ногтевого сервиса."
+    },
+    {
+      "id": "hair",
+      "title": "Парикмахерский зал",
+      "description": "Стрижки, окрашивание, колорирование и мелирование волос, уход и реконструкция волос, кератиновое выпрямление."
+    },
+    {
+      "id": "beauty",
+      "title": "Ресницы, брови, косметология и массаж",
+      "description": "Наращивание ресниц, оформление бровей и ламинирование, перманентный макияж, косметологические процедуры и массаж."
+    }
+  ],
+  "prices": [
+    { "service": "Маникюр аппаратный (комбинированный) | гель-лак | френч", "price": "2300 ₽", "duration": "2 ч" },
+    { "service": "Снятие гель-лака | маникюр аппаратный (комбинированный)", "price": "от 2200 ₽", "duration": "от 1 ч 30 мин" },
+    { "service": "Стрижка женская (короткие волосы)", "price": "800 ₽", "duration": "от 30 мин" },
+    { "service": "Стрижка женская (средние волосы)", "price": "900 ₽", "duration": "от 30 мин" },
+    { "service": "Стрижка женская (длинные волосы)", "price": "1000 ₽", "duration": "от 30 мин" },
+    { "service": "Окрашивание в 1 тон (без материала)", "price": "1200–2000 ₽" },
+    { "service": "Мелирование волос (с материалом)", "price": "2000–7000 ₽" },
+    { "service": "Колорирование волос (с материалом)", "price": "3000–6000 ₽" }
+  ],
+  "masters": [
+    { "name": "Бурдаева Юлия", "role": "Парикмахер", "photo": "https://f2.dikidi.ru/c27/v26555/55302h07jo.jpg" },
+    { "name": "Дровнина Анна", "role": "Парикмахер-универсал, мастер перманентного макияжа", "photo": "https://f2.dikidi.ru/c28/v27436/74sp6nak33.jpg" },
+    { "name": "Дюжева Елизавета", "role": "Мастер ногтевого сервиса", "photo": "https://f2.dikidi.ru/c27/v26555/4qtd1lfkih.jpg" },
+    { "name": "Земцовская Александра", "role": "Бровист, ламинирование ресниц", "photo": "https://f2.dikidi.ru/c27/v26555/7rjo02i2i4.jpg" },
+    { "name": "Золотая Алена", "role": "Мастер маникюра", "photo": "https://f2.dikidi.ru/c28/v27812/2kus38nj4j.jpg" },
+    { "name": "Короткова Ольга", "role": "Парикмахер", "photo": "https://f2.dikidi.ru/c27/v26555/3lkdfm234b.jpg" },
+    { "name": "Круглецкая Ольга", "role": "Парикмахер", "photo": "https://f2.dikidi.ru/c27/v26555/9nbh72p3ed.jpg" },
+    { "name": "Купченкова Диана", "role": "Мастер по реконструкции волос", "photo": "https://f2.dikidi.ru/c28/v27771/1el0uuhtf3.jpg" },
+    { "name": "Лебедева Юлия", "role": "Массажист, мастер педикюра", "photo": "https://f2.dikidi.ru/c27/v26555/3chuvmejq9.jpg" },
+    { "name": "Онищенко Елена", "role": "Парикмахер", "photo": "https://f2.dikidi.ru/c27/v26555/dgt9u3bkm1.jpg" }
+  ],
+  "sources": [
+    { "name": "DIKIDI — профиль салона (онлайн-запись)", "url": "https://dikidi.net/ru/profile/salon_krasoty_aura_lait_1761150" },
+    { "name": "ВКонтакте — группа салона", "url": "https://vk.com/aura29" },
+    { "name": "2ГИС — карточка салона", "url": "https://2gis.ru/arkhangelsk/firm/70000001025107533" }
+  ]
+}
